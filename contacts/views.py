@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QWidget
 )
+from .model import ContactsModel
 
 class Window(QMainWindow):
     """메인 윈도우"""
@@ -18,11 +19,14 @@ class Window(QMainWindow):
         self.setCentralWidget(self.centralWidget)
         self.layout = QHBoxLayout()
         self.centralWidget.setLayout(self.layout)
+        self.contactsModel = ContactsModel()
         self.setupUI()
 
     def setupUI(self):
+        """메인 윈도우 GUI 설정"""
         #  테이블 뷰 위젯 생성
         self.table = QTableView()
+        self.table.setModel(self.contactsModel.model)
         self.table.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.table.resizeColumnsToContents()
         #  버튼 생성
