@@ -1,4 +1,12 @@
-from PyQt5.QtWidgets import QHBoxLayout, QMainWindow, QWidget
+from PyQt5.QtWidgets import (
+    QAbstractItemView,
+    QHBoxLayout,
+    QMainWindow,
+    QPushButton,
+    QTableView,
+    QVBoxLayout,
+    QWidget
+)
 
 class Window(QMainWindow):
     """메인 윈도우"""
@@ -10,3 +18,22 @@ class Window(QMainWindow):
         self.setCentralWidget(self.centralWidget)
         self.layout = QHBoxLayout()
         self.centralWidget.setLayout(self.layout)
+        self.setupUI()
+
+    def setupUI(self):
+        #  테이블 뷰 위젯 생성
+        self.table = QTableView()
+        self.table.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.table.resizeColumnsToContents()
+        #  버튼 생성
+        self.addButten = QPushButton("추가...")
+        self.deleteButten = QPushButton("삭제")
+        self.clearAllButten = QPushButton("목록 초기화")
+        #  레이아웃 GUI
+        layout = QVBoxLayout()
+        layout.addWidget(self.addButten)
+        layout.addWidget(self.deleteButten)
+        layout.addStretch()
+        layout.addWidget(self.clearAllButten)
+        self.layout.addWidget(self.table)
+        self.layout.addLayout(layout)
