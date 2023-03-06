@@ -39,7 +39,9 @@ class Window(QMainWindow):
         self.addButten = QPushButton("추가...")
         self.addButten.clicked.connect(self.openAddDialog)          # .clicked() 버튼의 신호를 새로 생성된 슬롯에 연결함 이렇게 하면 버튼을 클릭하면 추가 대화상자가 자동으로 호출됨(.openAddDialog)
         self.deleteButten = QPushButton("삭제")
+        self.deleteButten.clicked.connect(self.deleteContact)       # 삭제 버튼의 신호를 슬롯에 연결함
         self.clearAllButten = QPushButton("목록 초기화")
+        self.clearAllButten.clicked.connect(self.clearContacts)     # 목록 초기화 버튼을 clearContacts 메소드와 연결함
         #  레이아웃 GUI
         layout = QVBoxLayout()
         layout.addWidget(self.addButten)
@@ -55,6 +57,34 @@ class Window(QMainWindow):
         if dialog.exec() == QDialog.Accepted:               # 대화가 수락되었는지 확인하는 조건문을 정의함
             self.contactsModel.addContact(dialog.data)
             self.table.resizeColumnsToContents()
+
+    def deleteContact(self):
+        """선택한 주소록을 데이터베이스에서 삭제함"""
+        row = self.table.currentIndex().row() # 현재 선택된 행의 인덱스를 가져옴
+        if row < 0:
+            return
+
+        messageBox = QMessageBox.warning(
+            self,
+            "경고!",
+            "선택한 주소를 제거하시겠습니까?",
+            QMessageBox.Ok | QMessageBox.Cancel,
+        )
+
+        if messageBox == QMessageBox.Ok:
+            self.contactsModel.deleteContact(row)   # 메시지 박스로부터 사용자가 수락을 할 경우 해당 행을 삭제함
+
+    def clearContacts(self):
+        """데이터베이스에서 모든 주소를 제거함"""
+        messageBox = QMessageBox.warning(
+            self,
+            "경고!",
+            "모든 주소를 제거 하시겠습니까?",
+            QMessageBox.Ok | QMessageBox.Cancel,
+        )
+
+        if messageBox == QMessageBox.Ok:
+            self.contactsModel.clearContacts()
 
 class AddDialog(QDialog):
     """주소록 추가 대화상자"""
