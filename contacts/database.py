@@ -23,7 +23,7 @@ def createConnection(databaseName):
         QMessageBox.Warning(
             None,   # 본래는 self가 들어가는 자리인데 매개 변수가 없어서 None으로 표시한?듯
             "주소록 프로그램",
-            f"데이터베이스 오류: {connection.lastError().text()}",  # 맨 앞에 f 는 도대체 정체를 모르겠음;;
+            f"데이터베이스 오류: {connection.lastError().text()}",  # 맨 앞에 f 는 도대체 정체를 모르겠음;; +ps 대충 대화상자의 제목하고 내용을 구분하기 위한 요소같다고 추측됨
         )
         return False
     _createContactsTable()

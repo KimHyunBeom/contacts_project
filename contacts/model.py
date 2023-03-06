@@ -18,3 +18,12 @@ class ContactsModel:
         for columnIndex, header in enumerate(headers):
             tableModel.setHeaderData(columnIndex, Qt.Horizontal, header)
         return tableModel
+
+    def addContact(self, data):
+        """데이터베이스에 새 주소를 추가함"""
+        rows = self.model.rowCount()            # 데이터 모델의 현재 행 수 가져옴
+        self.model.insertRows(rows, 1)          # 새 행 삽입
+        for column, field in enumerate(data):
+            self.model.setData(self.model.index(rows, column + 1), field)
+        self.model.submitAll()                  # 변경 사항 데이터베이스에 반환. submitAll()이 실패해도 이미 제출된 변경 사항은 캐시에서 지워지지 않음(공식 문서 참고함 - bool QSqlTableModel::submitAll())
+        self.model.select()                     # 데이터베이스에 모델로 데이터를 다시 로드
