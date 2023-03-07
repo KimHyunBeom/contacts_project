@@ -9,8 +9,8 @@ def _createContactsTable():
         CREATE TABLE IF NOT EXISTS contacts (
             id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,   # insert 문 보낼 때마다 자동으로 id 값 증가되게 함
             name VARCHAR(40) NOT NULL,
-            job VARCHAR(50),
-            email VARCHAR(40) NOT NULL
+            phone VARCHAR(50),
+            adress VARCHAR(60) NOT NULL
         )
         """
     )

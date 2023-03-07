@@ -14,6 +14,7 @@ from PyQt5.QtWidgets import (
     QWidget
 )
 from .model import ContactsModel
+import re
 
 class Window(QMainWindow):
     """메인 윈도우"""
@@ -103,15 +104,16 @@ class AddDialog(QDialog):
         # 데이터 필드 라인 편집기 생성
         self.nameField = QLineEdit()
         self.nameField.setObjectName("Name")
-        self.jobField = QLineEdit()
-        self.jobField.setObjectName("Job")
-        self.emailField = QLineEdit()
-        self.emailField.setObjectName("Email")
+        self.phoneField = QLineEdit()
+        self.phoneField.setInputMask('999-9999-9999')
+        self.phoneField.setObjectName("Phone")
+        self.adressField = QLineEdit()
+        self.adressField.setObjectName("Adress")
         # 데이터 필드 레이아웃
         layout = QFormLayout()
         layout.addRow("Name:", self.nameField)
-        layout.addRow("Job:", self.jobField)
-        layout.addRow("Email:", self.emailField)
+        layout.addRow("Phone:", self.phoneField)
+        layout.addRow("Adress:", self.adressField)
         self.layout.addLayout(layout)
         # 대화상자에 버튼 추가 및 연결
         self.buttonsBox = QDialogButtonBox(self)
@@ -125,8 +127,13 @@ class AddDialog(QDialog):
 
     def accept(self):
         """대화상자 수락 시 동작"""
+        # 이게 왜 안되지;;
+        # 대충 하이픈 삽입하는 정규식 코드 아마도 데이터에 삽입된 뒤에 항목의 일치성을 검사하고 그 뒤에 정규식 코드가 들어가야 하려나
+        # self.phoneField = re.sub('(\d{3})(\d{4})(\d{4})', r'\1-\2-\3', self.phoneField)
+        # 하아... setInputMask라고 라인편집기 속성이 따로 있었음 108행 참고
+
         self.data = [] # 사용자의 입력데이터 저장함
-        for field in (self.nameField, self.jobField, self.emailField):      # 대화 상자에서 다음 세 줄 편집 및 필드를 반복하는 루프를 정의함
+        for field in (self.nameField, self.phoneField, self.adressField):      # 대화 상자에서 다음 세 줄 편집 및 필드를 반복하는 루프를 정의함
             if not field.text():
                 QMessageBox.critical(
                     self,

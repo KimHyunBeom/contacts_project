@@ -12,9 +12,9 @@ class ContactsModel:
         """모델 생성 및 설정"""
         tableModel = QSqlTableModel()       # QSqlTableModel은 단일 테이블에서 데이터베이스 레코드를 읽고 쓰기 위한 고급 인터페이스임
         tableModel.setTable("contacts")
-        tableModel.setEditStrategy(QSqlTableModel.OnFieldChange)
+        tableModel.setEditStrategy(QSqlTableModel.OnFieldChange)  # 변경 사항이 즉시 데이터베이스에 저장되도록 함
         tableModel.select()
-        headers = ("ID", "Name", "Job", "Email")
+        headers = ("ID", "Name", "Phone", "Adress")
         for columnIndex, header in enumerate(headers):
             tableModel.setHeaderData(columnIndex, Qt.Horizontal, header)
         return tableModel
@@ -37,8 +37,7 @@ class ContactsModel:
     def clearContacts(self):
         """모든 주소 정보를 데이터베이스에서 삭제함."""
         self.model.setEditStrategy(QSqlTableModel.OnManualSubmit)  # submitAll()이 호출될 때까지 모든 변경 사항이 캐시됨
-        self.model.removeRow(0, self.model.rowCount())             # 모델에서 모든 행을 제거함
+        self.model.removeRows(0, self.model.rowCount())             # 모델에서 모든 행을 제거함
         self.model.submitAll()
         self.model.setEditStrategy(QSqlTableModel.OnFieldChange)   # .editStrategy 속성을 원래 값으로 재설정(안 그럼 주소 업데이트 불가능)
         self.model.select()
-
