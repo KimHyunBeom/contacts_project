@@ -14,7 +14,7 @@ from PyQt5.QtWidgets import (
     QWidget
 )
 from .model import ContactsModel
-import re
+#import re
 
 class Window(QMainWindow):
     """메인 윈도우"""

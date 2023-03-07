@@ -17,7 +17,7 @@
 * 주소 입력 시 주소검색 공공데이터 API 사용(+ 팝업API)
 
 ## 사용 방법
-* **contacts.py** 파일을 실행하는 것으로 본 프로그램을 돌려볼 수 있습니다.
+* 파이참에서 **contacts.py** 파일을 실행하는 것으로 본 프로그램을 돌려볼 수 있습니다.
 
 ## 참고문서(*WikiDocs*)
 * [PyQt5 Tutorial - 파이썬으로 만드는 나만의 GUI 프로그램](https://wikidocs.net/book/2165)
